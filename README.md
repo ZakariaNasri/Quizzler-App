@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # quizzler_app
 
 A new Flutter project.
@@ -18,3 +19,6 @@ samples, guidance on mobile development, and a full API reference.
 =======
 # Quizzler-App
 >>>>>>> fc9839a6d2f96a28c4f5c9a3ab116cd29f7202f7
+=======
+# Quizzler-App
+>>>>>>> ecb45de6d108364417a50ecba5f2ea3920925fe7
