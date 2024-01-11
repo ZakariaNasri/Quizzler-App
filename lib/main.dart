@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'question.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(Quizz());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Quizz extends StatelessWidget {
+  Quizz({super.key});
 
   // This widget is the root of your application.
   @override
@@ -25,25 +26,47 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  @override
-  List<Icon> ScoreList = [];
-
+  List<Icon> scoreList = [];
+  // List<String> questions = [
+  //   'Is the sky blue?',
+  //   'Was the Declaration of Independence signed in 1776?',
+  //   'Did Shakespeare write "Harry Potter"?',
+  //   'Is the Earth flat?',
+  //   'Is Tokyo the capital of Japan?',
+  // ];
+  // List<bool> answers = [true, true, false, false, true];
+  int i = 0;
+  List<Question> questionBank = [
+    Question(q: 'Is the sky blue?', a: true),
+    Question(q: 'Was the Declaration of Independence signed in 1776?', a: true),
+    Question(q: 'Did Shakespeare write "Harry Potter"?', a: false),
+    Question(q: 'Is the Earth flat?', a: false),
+    Question(q: 'Is Tokyo the capital of Japan?', a: true),
+  ];
   result(bool answer) {
     var icon;
-    if (answer == true) {
-      icon = Icon(
-        Icons.check,
-        color: Colors.green,
-      );
+    if (i < questionBank.length) {
+      if (answer == questionBank[i].answer) {
+        icon = Icon(
+          Icons.check,
+          color: Colors.green,
+        );
+        i++;
+      } else {
+        icon = Icon(
+          Icons.close,
+          color: Colors.red,
+        );
+        i++;
+      }
+      scoreList.add(icon);
+      print(i);
     } else {
-      icon = Icon(
-        Icons.close,
-        color: Colors.red,
-      );
+      i = 0;
     }
-    ScoreList.add(icon);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -67,7 +90,7 @@ class _QuizPageState extends State<QuizPage> {
               child: Center(
                   child: Center(
                 child: Text(
-                  'Here is thequestion placeholder',
+                  questionBank[i].question,
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               )),
@@ -120,7 +143,7 @@ class _QuizPageState extends State<QuizPage> {
             flex: 0,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: ScoreList,
+              children: scoreList,
             ),
           ),
         ],
