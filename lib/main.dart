@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'quizzBrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
+QuizzBrain quizzBrain = QuizzBrain();
 void main() {
   runApp(Quizz());
 }
@@ -27,42 +29,27 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreList = [];
-  // List<String> questions = [
-  //   'Is the sky blue?',
-  //   'Was the Declaration of Independence signed in 1776?',
-  //   'Did Shakespeare write "Harry Potter"?',
-  //   'Is the Earth flat?',
-  //   'Is Tokyo the capital of Japan?',
-  // ];
-  // List<bool> answers = [true, true, false, false, true];
-  int i = 0;
-  List<Question> questionBank = [
-    Question(q: 'Is the sky blue?', a: true),
-    Question(q: 'Was the Declaration of Independence signed in 1776?', a: true),
-    Question(q: 'Did Shakespeare write "Harry Potter"?', a: false),
-    Question(q: 'Is the Earth flat?', a: false),
-    Question(q: 'Is Tokyo the capital of Japan?', a: true),
-  ];
   result(bool answer) {
-    var icon;
-    if (i < questionBank.length) {
-      if (answer == questionBank[i].answer) {
+    if (quizzBrain.isFinished() == true) {
+      scoreList.clear();
+      quizzBrain.reset();
+      Alert(context: context, title: "Quizz", desc: "Finish!").show();
+    } else {
+      var icon;
+      if (answer == quizzBrain.getQuestionAnswer()) {
         icon = Icon(
           Icons.check,
           color: Colors.green,
         );
-        i++;
-      } else {
+        scoreList.add(icon);
+      } else if (answer != quizzBrain.getQuestionAnswer()) {
         icon = Icon(
           Icons.close,
           color: Colors.red,
         );
-        i++;
+        scoreList.add(icon);
       }
-      scoreList.add(icon);
-      print(i);
-    } else {
-      i = 0;
+      quizzBrain.nextQuestion();
     }
   }
 
@@ -90,7 +77,7 @@ class _QuizPageState extends State<QuizPage> {
               child: Center(
                   child: Center(
                 child: Text(
-                  questionBank[i].question,
+                  quizzBrain.getQuestionText(),
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               )),
