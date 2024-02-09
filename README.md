@@ -9,8 +9,11 @@ Explore this straightforward Flutter project, focused on practicing essential fu
 ## Features
 
 Question Handling: Functions for setting and getting quiz questions.
+
 Answer Handling: Functions for setting and getting quiz answers.
+
 Private Variables: Demonstrates encapsulation through the use of private variables.
+
 Scoring System: Ability to keep track of user scores.
 
 ## Screenshots
